@@ -11,7 +11,7 @@ const TransactionSchema = new Schema({
 		type: Schema.ObjectId,
 		required: true,
 	},
-	amount: {
+	finalAmount: {
 		type: Number,
 		required: true,
 	},
@@ -19,13 +19,45 @@ const TransactionSchema = new Schema({
 		type: Number,
 		required: true,
 	},
+	commisionType: {
+		type: String,
+		required: true,
+	},
 	acNo: {
 		type: Number,
 		required: true,
 	},
-	type: {
+	finalType: {
 		type: String,
 		required: true,
+	},
+	amount: {
+		type: Number,
+		required: true,
+	},
+	amountType: {
+		type: String,
+		required: true,
+	},
+	commision1: {
+		type: Number,
+		required: true,
+	},
+	commision2: {
+		type: Number,
+		required: true,
+	},
+	description: {
+		type: String,
+		required: true,
+	},
+	sign: {
+		type: String,
+		required: true,
+	},
+	Date: {
+		type: Date,
+		default: Date.now,
 	},
 });
 

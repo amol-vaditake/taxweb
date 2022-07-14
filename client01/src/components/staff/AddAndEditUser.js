@@ -25,7 +25,7 @@ export default function AddAndEdit({ onClose }) {
         <Loader />
       ) : (
         <>
-          <h2>Add Transactions</h2>
+          <h2>Add Users</h2>
           <Formik
             initialValues={{
               users: [{}]

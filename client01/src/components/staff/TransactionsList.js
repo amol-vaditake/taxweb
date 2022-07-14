@@ -24,38 +24,40 @@ export default function TransactionsList() {
 
   return (
     <Grid style={{ padding: '5%' }}>
-      <Paper elevation={4}>
-        <Grid container justifyContent='center' alignItems='center'>
-          <Grid item md={4} sm={4} lg={2} style={{ textAlign: 'center', fontFamily: 'system-ui' }}>
-            <Button variant='contained' size='small' onClick={() => goToTheRoute('/dashboard')}>
-              Go To Dashboard
-            </Button>
+      <Grid style={{ marginRight: '10%', marginLeft: '10%', border: '2px solid rgb(255, 137, 130)' }}>
+        <Paper elevation={6}>
+          <Grid container justifyContent='center' alignItems='center'>
+            <Grid item md={4} sm={4} lg={2} style={{ textAlign: 'center', fontFamily: 'system-ui' }}>
+              <Button variant='contained' size='small' onClick={() => goToTheRoute('/dashboard')}>
+                Go To Dashboard
+              </Button>
+            </Grid>
+            <Grid item md={4} sm={4} lg={8} style={{ textAlign: 'center', fontFamily: 'system-ui' }}>
+              <h2>Transactions</h2>
+            </Grid>
+            <Grid item md={4} sm={4} lg={2}>
+              <Button variant='contained' size='small' onClick={() => setAdd(true)}>
+                Add Transaction
+              </Button>
+            </Grid>
           </Grid>
-          <Grid item md={4} sm={4} lg={8} style={{ textAlign: 'center', fontFamily: 'system-ui' }}>
-            <h2>Transactions</h2>
-          </Grid>
-          <Grid item md={4} sm={4} lg={2}>
-            <Button variant='contained' size='small' onClick={() => setAdd(true)}>
-              Add Transaction
-            </Button>
-          </Grid>
+        </Paper>
+        <Grid>
+          <TransactionTable transactions={transactions} />
         </Grid>
-      </Paper>
-      <Grid>
-        <TransactionTable transactions={transactions} />
-      </Grid>
-      <Modal
-        isOpen={add}
-        onClose={() => {
-          setAdd(false)
-        }}
-      >
-        <AddAndEditTransaction
+        <Modal
+          isOpen={add}
           onClose={() => {
             setAdd(false)
           }}
-        />
-      </Modal>
+        >
+          <AddAndEditTransaction
+            onClose={() => {
+              setAdd(false)
+            }}
+          />
+        </Modal>
+      </Grid>
     </Grid>
   )
 }
