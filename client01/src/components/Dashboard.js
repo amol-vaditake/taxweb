@@ -20,18 +20,27 @@ export default function UsersList() {
             </Typography>
           </Grid>
           <Grid item xs={12} container justifyContent='center' style={{ textAlign: 'center', margin: '20px' }}>
-            <Grid item xs={3}></Grid>
-            <Grid item xs={3}>
+            <Grid item xs={4}>
+              {' '}
               <Button color='primary' variant='contained' style={{ textDecoration: 'none' }} onClick={() => goToTheRoute('/transactions')}>
-                Transactions
+                Transactions(Amount and commision)
+              </Button>{' '}
+            </Grid>
+            <Grid item xs={4}>
+              <Button
+                color='primary'
+                variant='contained'
+                style={{ textDecoration: 'none' }}
+                onClick={() => goToTheRoute('/transactions/sales')}
+              >
+                Transactions(Sale And Purchase)
               </Button>
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={4}>
               <Button color='primary' variant='contained' style={{ textDecoration: 'none' }} onClick={() => goToTheRoute('/users')}>
                 Users
               </Button>
             </Grid>
-            <Grid item xs={3}></Grid>
           </Grid>
         </Grid>
       </Paper>

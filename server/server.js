@@ -41,10 +41,12 @@ const users = require('./routes/api/users');
 const draw = require('./routes/api/draw');
 const taxUsers = require('./routes/api/taxUsers');
 const transactions = require('./routes/api/transactions');
+const saleTransactions = require('./routes/api/saleTransactions');
 app.use('/api/users', users);
 app.use('/api/draw', draw);
 app.use('/api/taxUsers', taxUsers);
 app.use('/api/transactions', transactions);
+app.use('/api/saleTransactions', saleTransactions);
 
 
 // Passport config
