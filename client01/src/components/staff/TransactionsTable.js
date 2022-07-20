@@ -27,7 +27,7 @@ export default function Table({ transactions = [] }) {
             <Grid item xs={3.5} style={{ borderRight: '2px solid rgb(255, 137, 130)', lineHeight: '5.8rem' }}>
               Name
             </Grid>
-            <Grid item xs={5} container>
+            <Grid item xs={5} container alignItems='baseline'>
               <Grid item xs={12} style={{ borderBottom: '2px solid rgb(255, 137, 130)', lineHeight: '2' }}>
                 Amount
               </Grid>

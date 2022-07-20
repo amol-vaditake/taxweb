@@ -15,7 +15,7 @@ export default function AddAndEdit({ onClose }) {
 
   async function addSaleTransaction(data) {
     data.transactions = data.transactions.map((t) => {
-      return { name: users.find((u) => u._id === t.userId).name, ...t }
+      return { ...t, name: users.find((u) => u._id === t.userId).name }
     })
     setLoading(true)
     try {
@@ -73,115 +73,69 @@ export default function AddAndEdit({ onClose }) {
                       const touchedUserId = getIn(touched, userId)
                       const errorUserId = getIn(errors, userId)
 
-                      const description = `transactions[${index}].description`
-                      const touchedDescription = getIn(touched, description)
-                      const errorDescription = getIn(errors, description)
-
                       const quantity = `transactions[${index}].quantity`
                       const touchedQuantity = getIn(touched, quantity)
                       const errorQuantity = getIn(errors, quantity)
 
-                      const purchase = `transactions[${index}].purchase`
-                      const touchedPurchase = getIn(touched, purchase)
-                      const errorPurchase = getIn(errors, purchase)
+                      const price = `transactions[${index}].price`
+                      const touchedPrice = getIn(touched, price)
+                      const errorPrice = getIn(errors, price)
 
                       const sign = `transactions[${index}].sign`
                       const touchedSign = getIn(touched, sign)
                       const errorSign = getIn(errors, sign)
 
-                      const sale = `transactions[${index}].sale`
-                      const touchedSale = getIn(touched, sale)
-                      const errorSale = getIn(errors, sale)
+                      const type = `transactions[${index}].type`
+                      const touchedType = getIn(touched, type)
+                      const errorType = getIn(errors, type)
 
-                      const finalQuantity = `transactions[${index}].finalQuantity`
-                      const touchedFinalQuantity = getIn(touched, finalQuantity)
-                      const errorFinalQuantity = getIn(errors, finalQuantity)
-
-                      const finalType = `transactions[${index}].finalType`
-
-                      const finalSaleAndPurchase = `transactions[${index}].finalSaleAndPurchase`
-                      const touchedFinalSaleAndPurchase = getIn(touched, finalSaleAndPurchase)
-                      const errorFinalSaleAndPurchase = getIn(errors, finalSaleAndPurchase)
-
-                      function setFinalQuantity(quantity, finalSAndP) {
-                        if (quantity > finalSAndP) {
-                          setFieldValue(finalType, 'sale')
-                          setFieldValue(finalQuantity, parseInt(quantity) - parseInt(finalSAndP))
-                        } else {
-                          setFieldValue(finalType, 'purchase')
-                          setFieldValue(finalQuantity, parseInt(finalSAndP) - parseInt(quantity))
-                        }
-                      }
+                      const finalValue = `transactions[${index}].finalValue`
+                      const touchedFinalValue = getIn(touched, finalValue)
+                      const errorFinalValue = getIn(errors, finalValue)
 
                       function handleSign(e) {
                         if (e.target.value === '=') {
                           let v =
-                            values.transactions[index].sale ||
-                            values.transactions[index].purchase ||
-                            values.transactions[index].finalSaleAndPurchase ||
+                            values.transactions[index].quantity ||
+                            values.transactions[index].price ||
+                            values.transactions[index].finalValue ||
                             0
-                          setFieldValue(finalSaleAndPurchase, v)
-                          setFieldValue(sale, v)
-                          setFieldValue(purchase, v)
-                          if (values.transactions[index].quantity) {
-                            setFinalQuantity(
-                              values.transactions[index].quantity,
-                              values.transactions[index].sale || values.transactions[index].purchase || 0
-                            )
-                          }
-                        } else if (!values.transactions[index].sale || !values.transactions[index].purchase) {
+                          setFieldValue(finalValue, v)
+                          setFieldValue(quantity, v)
+                          setFieldValue(price, v)
+                        } else if (!values.transactions[index].quantity || !values.transactions[index].price) {
                           console.log('')
                         } else {
                           setFieldValue(
-                            finalSaleAndPurchase,
-                            operators[e.target.value](values.transactions[index].sale, values.transactions[index].purchase)
+                            finalValue,
+                            operators[e.target.value](values.transactions[index].quantity, values.transactions[index].price)
                           )
-                          setFinalQuantity(
-                            values.transactions[index].quantity,
-                            operators[e.target.value](values.transactions[index].sale, values.transactions[index].purchase)
-                          )
-                        }
-                      }
-
-                      function handleSale(e) {
-                        if (!values.transactions[index].sign || !values.transactions[index].purchase) return
-                        else if (values.transactions[index].sign !== '=') {
-                          setFieldValue(
-                            finalSaleAndPurchase,
-                            operators[values.transactions[index].sign](e.target.value, values.transactions[index].purchase)
-                          )
-                          setFinalQuantity(
-                            values.transactions[index].quantity,
-                            operators[values.transactions[index].sign](e.target.value, values.transactions[index].purchase)
-                          )
-                        } else if (values.transactions[index].sign === '=') {
-                          setFieldValue(finalSaleAndPurchase, e.target.value)
-                          setFieldValue(purchase, e.target.value)
-                          setFinalQuantity(values.transactions[index].quantity, e.target.value)
-                        }
-                      }
-
-                      function handlePurchase(e) {
-                        if (!values.transactions[index].sign || !values.transactions[index].sale) return
-                        else if (values.transactions[index].sign !== '=') {
-                          setFieldValue(
-                            finalSaleAndPurchase,
-                            operators[values.transactions[index].sign](values.transactions[index].sale, e.target.value)
-                          )
-                          setFinalQuantity(
-                            values.transactions[index].quantity,
-                            operators[values.transactions[index].sign](values.transactions[index].sale, e.target.value)
-                          )
-                        } else if (values.transactions[index].sign === '=') {
-                          setFieldValue(finalSaleAndPurchase, e.target.value)
-                          setFieldValue(sale, e.target.value)
-                          setFinalQuantity(values.transactions[index].quantity, e.target.value)
                         }
                       }
 
                       function handleQuantity(e) {
-                        if (values.transactions[index].finalSaleAndPurchase) {
-                          setFinalQuantity(e.target.value, values.transactions[index].finalSaleAndPurchase)
+                        if (!values.transactions[index].sign || !values.transactions[index].price) return
+                        else if (values.transactions[index].sign !== '=') {
+                          setFieldValue(
+                            finalValue,
+                            operators[values.transactions[index].sign](e.target.value, values.transactions[index].price)
+                          )
+                        } else if (values.transactions[index].sign === '=') {
+                          setFieldValue(finalValue, e.target.value)
+                          setFieldValue(price, e.target.value)
+                        }
+                      }
+
+                      function handlePrice(e) {
+                        if (!values.transactions[index].sign || !values.transactions[index].quantity) return
+                        else if (values.transactions[index].sign !== '=') {
+                          setFieldValue(
+                            finalValue,
+                            operators[values.transactions[index].sign](values.transactions[index].quantity, e.target.value)
+                          )
+                        } else if (values.transactions[index].sign === '=') {
+                          setFieldValue(finalValue, e.target.value)
+                          setFieldValue(quantity, e.target.value)
                         }
                       }
 
@@ -228,39 +182,7 @@ export default function AddAndEdit({ onClose }) {
                               ))}
                             </TextField>
                           </Grid>
-                          <Grid item lg={4} sm={12} md={12}>
-                            <TextField
-                              fullWidth
-                              margin='normal'
-                              variant='outlined'
-                              label='Description'
-                              name={description}
-                              value={p.description}
-                              required
-                              helperText={touchedDescription && errorDescription ? errorDescription : ''}
-                              error={Boolean(touchedDescription && errorDescription)}
-                              onChange={handleChange}
-                              onBlur={handleBlur}
-                              size='small'
-                            />
-                          </Grid>
-                          <Grid item lg={3} sm={12} md={12}>
-                            <TextField
-                              fullWidth
-                              margin='normal'
-                              variant='outlined'
-                              label='Final Quantity'
-                              type='number'
-                              name={finalQuantity}
-                              value={p.finalQuantity || 0}
-                              helperText={'Auttomatically Calculated'}
-                              error={Boolean(touchedFinalQuantity && errorFinalQuantity)}
-                              disabled
-                              onChange={handleChange}
-                              onBlur={handleBlur}
-                              size='small'
-                            />
-                          </Grid>
+
                           <Grid item lg={2} sm={12} md={12}>
                             <TextField
                               fullWidth
@@ -281,25 +203,32 @@ export default function AddAndEdit({ onClose }) {
                               size='small'
                             />
                           </Grid>
-                          <Grid item lg={2} sm={4} md={4}>
+                          <Grid item lg={1} sm={12} md={12}>
                             <TextField
+                              id='outlined-select-currency'
+                              select
                               fullWidth
                               margin='normal'
                               variant='outlined'
-                              label='Sale'
-                              type='number'
-                              name={sale}
-                              value={p.sale || ''}
+                              label='Type'
+                              name={type}
+                              value={p.type}
                               required
-                              helperText={touchedSale && errorSale ? errorSale : ''}
-                              error={Boolean(touchedSale && errorSale)}
-                              onChange={(e) => {
-                                handleChange(e)
-                                handleSale(e)
-                              }}
+                              helperText={touchedType && errorType ? errorType : ''}
+                              error={Boolean(touchedType && errorType)}
+                              onChange={handleChange}
                               onBlur={handleBlur}
                               size='small'
-                            />
+                            >
+                              {[
+                                { value: 'credit', name: 'Credit' },
+                                { value: 'debit', name: 'Debit' }
+                              ].map((option) => (
+                                <MenuItem key={option.value} value={option.value}>
+                                  {option.name}
+                                </MenuItem>
+                              ))}
+                            </TextField>
                           </Grid>
                           <Grid item lg={0.5} sm={2} md={2}>
                             <TextField
@@ -338,35 +267,34 @@ export default function AddAndEdit({ onClose }) {
                               fullWidth
                               margin='normal'
                               variant='outlined'
-                              label='Purchase'
+                              label='Price'
                               type='number'
-                              name={purchase}
-                              value={p.purchase || ''}
+                              name={price}
+                              value={p.price || ''}
                               required
-                              helperText={touchedPurchase && errorPurchase ? errorPurchase : ''}
-                              error={Boolean(touchedPurchase && errorPurchase)}
+                              helperText={touchedPrice && errorPrice ? errorPrice : ''}
+                              error={Boolean(touchedPrice && errorPrice)}
                               fast={false}
                               onChange={(e) => {
                                 handleChange(e)
-                                handlePurchase(e)
+                                handlePrice(e)
                               }}
                               onBlur={handleBlur}
                               size='small'
                             />
                           </Grid>
-                          <Grid item lg={2.5} sm={12} md={12}>
+                          <Grid item lg={3} sm={12} md={12}>
                             <TextField
                               fullWidth
                               margin='normal'
                               variant='outlined'
-                              label='Final Sale And Purchase Value'
+                              label='Final Value'
                               type='number'
-                              name={finalSaleAndPurchase}
-                              value={p.finalSaleAndPurchase || 0}
-                              required
-                              disabled
+                              name={finalValue}
+                              value={p.finalValue || 0}
                               helperText={'Auttomatically Calculated'}
-                              error={Boolean(touchedFinalSaleAndPurchase && errorFinalSaleAndPurchase)}
+                              error={Boolean(touchedFinalValue && errorFinalValue)}
+                              disabled
                               onChange={handleChange}
                               onBlur={handleBlur}
                               size='small'

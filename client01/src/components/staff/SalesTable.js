@@ -21,21 +21,24 @@ export default function Table({ salesTransactions = [] }) {
               fontSize: '18px'
             }}
           >
-            <Grid item xs={3.5} style={{ borderRight: '2px solid rgb(255, 137, 130)', lineHeight: '5.8rem' }}>
+            <Grid item xs={1.5} style={{ borderRight: '2px solid rgb(255, 137, 130)', lineHeight: '5.8rem' }}>
               Date
             </Grid>
-            <Grid item xs={3.5} style={{ borderRight: '2px solid rgb(255, 137, 130)', lineHeight: '5.8rem' }}>
+            <Grid item xs={2.5} style={{ borderRight: '2px solid rgb(255, 137, 130)', lineHeight: '5.8rem' }}>
               Name
             </Grid>
-            <Grid item xs={5} container>
+            <Grid item xs={4} style={{ borderRight: '2px solid rgb(255, 137, 130)', lineHeight: '5.8rem' }}>
+              Description
+            </Grid>
+            <Grid item xs={4} container alignItems='baseline'>
               <Grid item xs={12} style={{ borderBottom: '2px solid rgb(255, 137, 130)', lineHeight: '2' }}>
-                Quantity
+                Final Value
               </Grid>
               <Grid item xs={6} style={{ borderRight: '2px solid rgb(255, 137, 130)', lineHeight: '2.5' }}>
-                Sale
+                Credit
               </Grid>
               <Grid item xs={6}>
-                Purchase
+                Debit
               </Grid>
             </Grid>
           </Grid>
@@ -45,7 +48,7 @@ export default function Table({ salesTransactions = [] }) {
                 <>
                   <Grid
                     item
-                    xs={3.5}
+                    xs={1.5}
                     style={{
                       ...(i !== salesTransactions.length - 1 ? { borderBottom: '2px solid rgb(255, 137, 130)' } : {}),
                       borderRight: '2px solid rgb(255, 137, 130)',
@@ -57,7 +60,7 @@ export default function Table({ salesTransactions = [] }) {
                   </Grid>
                   <Grid
                     item
-                    xs={3.5}
+                    xs={2.5}
                     style={{
                       borderRight: '2px solid rgb(255, 137, 130)',
                       ...(i !== salesTransactions.length - 1 ? { borderBottom: '2px solid rgb(255, 137, 130)' } : {}),
@@ -66,7 +69,18 @@ export default function Table({ salesTransactions = [] }) {
                   >
                     {t.name}
                   </Grid>
-                  <Grid item xs={5} container>
+                  <Grid
+                    item
+                    xs={4}
+                    style={{
+                      borderRight: '2px solid rgb(255, 137, 130)',
+                      ...(i !== salesTransactions.length - 1 ? { borderBottom: '2px solid rgb(255, 137, 130)' } : {}),
+                      lineHeight: '4rem'
+                    }}
+                  >
+                    {t.quantity} {t.sign} {t.price}
+                  </Grid>
+                  <Grid item xs={4} container>
                     <Grid
                       item
                       xs={6}
@@ -76,7 +90,7 @@ export default function Table({ salesTransactions = [] }) {
                         lineHeight: '4rem'
                       }}
                     >
-                      {t.finalType === 'sale' ? t.finalQuantity : '---'}
+                      {t.type === 'credit' ? t.finalValue : '---'}
                     </Grid>
                     <Grid
                       item
@@ -86,7 +100,7 @@ export default function Table({ salesTransactions = [] }) {
                         lineHeight: '4rem'
                       }}
                     >
-                      {t.finalType === 'purchase' ? t.finalQuantity : '---'}
+                      {t.type === 'debit' ? t.finalValue : '---'}
                     </Grid>
                   </Grid>
                 </>

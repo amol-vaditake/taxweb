@@ -11,11 +11,7 @@ const SaleTransactionSchema = new Schema({
 		type: Schema.ObjectId,
 		required: true,
 	},
-	finalQuantity: {
-		type: Number,
-		required: true,
-	},
-	finalSaleAndPurchase: {
+	finalValue: {
 		type: Number,
 		required: true,
 	},
@@ -23,7 +19,7 @@ const SaleTransactionSchema = new Schema({
 		type: Number,
 		required: true,
 	},
-	finalType: {
+	type: {
 		type: String,
 		required: true,
 	},
@@ -31,23 +27,15 @@ const SaleTransactionSchema = new Schema({
 		type: Number,
 		required: true,
 	},
-	sale: {
+	price: {
 		type: Number,
-		required: true,
-	},
-	purchase: {
-		type: Number,
-		required: true,
-	},
-	description: {
-		type: String,
 		required: true,
 	},
 	sign: {
 		type: String,
 		required: true,
 	},
-	Date: {
+	createdAt: {
 		type: Date,
 		default: Date.now,
 	},
