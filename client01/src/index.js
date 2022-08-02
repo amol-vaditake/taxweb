@@ -10,6 +10,7 @@ import { Provider, useSelector } from 'react-redux'
 import TransactionsList from './components/staff/TransactionsList'
 import TransactionsSalesList from './components/staff/TransactionsSalesList'
 import UsersList from './components/staff/UsersList'
+import User from './components/staff/User'
 import store from './redux/store'
 import { Navigate } from 'react-router-dom'
 
@@ -37,6 +38,7 @@ function App() {
         <Route exact path='/transactions' element={user ? <TransactionsList /> : <Login />} />
         <Route exact path='/transactions/sales' element={user ? <TransactionsSalesList /> : <Login />} />
         <Route exact path='/users' element={user ? <UsersList /> : <Login />} />
+        <Route exact path='/users/view/:userId' element={user ? <User /> : <Login />} />
         {/* <Route exact path='/login' element={user ? <Dashboard /> : <Login />} />
         <Route exact path='/login' element={user ? <Dashboard /> : <Login />} />
         <Route exact path='/login' element={user ? <Dashboard /> : <Login />} /> */}

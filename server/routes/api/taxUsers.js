@@ -20,8 +20,12 @@ router.post('/add', async function(req, res)  {
 });
 
 router.get('/get', async function(req, res)  {
+	if (req.query.userId) {
+		let user = await TaxUser.findOne({_id: req.query.userId});
+		return res.status(200).json({user});
+	}
 	let taxUsers = await TaxUser.find({});
-	res.status(200).json({taxUsers});
+	return res.status(200).json({taxUsers});
 });
 
 module.exports = router;

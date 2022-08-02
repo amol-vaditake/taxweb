@@ -6,6 +6,8 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
+import { Link } from 'react-router-dom'
+import LaunchIcon from '@mui/icons-material/Launch'
 
 // eslint-disable-next-line react/prop-types
 export default function TransactionTable({ taxUsers = [] }) {
@@ -26,7 +28,21 @@ export default function TransactionTable({ taxUsers = [] }) {
           {(taxUsers || []).map((row) => (
             <TableRow key={row.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
               <TableCell align='center' style={{ verticalAlign: 'top' }} component='th' scope='row'>
-                {row.name}
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    flexWrap: 'wrap',
+                    textAlign: 'center',
+                    justifyContent: 'center'
+                  }}
+                >
+                  {row.name}
+                  &nbsp;
+                  <Link to={`/users/view/${row._id}`}>
+                    <LaunchIcon style={{ fontSize: '18px' }} />
+                  </Link>
+                </div>
               </TableCell>
               <TableCell align='center' style={{ verticalAlign: 'top' }}>
                 {new Date(row.date).toLocaleString()}
