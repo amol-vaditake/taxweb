@@ -7,6 +7,10 @@ const SaleTransactionSchema = new Schema({
 		type: String,
 		required: true,
 	},
+	reference: {
+		type: String,
+		required: true,
+	},
 	userId: {
 		type: Schema.ObjectId,
 		required: true,

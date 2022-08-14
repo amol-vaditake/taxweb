@@ -5,9 +5,12 @@ import axios from 'axios'
 const apiURL = process.env.REACT_APP_API_URL
 import { useParams } from 'react-router-dom'
 import Loader from '../Loader'
+import SalesTable from './SalesTable'
 
 export default function UsersList() {
   const [user, setUser] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [transactions, setTransactions] = useState([])
   // let navigate = useNavigate()
 
   // function goToTheRoute(route) {
@@ -17,19 +20,26 @@ export default function UsersList() {
   useEffect(() => {
     axios.get(`${apiURL}/api/taxUsers/get?userId=${userId}`).then(function (response) {
       setUser(response.data?.user || {})
+      setTransactions([...(response.data?.transactions || []), ...(response.data?.saleTransactions || [])])
+      setLoading(false)
     })
   }, [])
-  console.log(userId, user)
   return (
-    <Grid style={{ padding: '5%', paddingLeft: '20%', paddingRight: '20%', textAlign: 'center' }}>
-      {user ? (
-        <Paper elevation={4} style={{ padding: '4rem' }}>
-          <div>
-            <b>User Name : {user.name}</b>
-          </div>
-          <div>
-            <b>Created At : {new Date(user.date).toLocaleString()}</b>
-          </div>
+    <Grid style={{ marginLeft: '15%', marginRight: '15%' }}>
+      {!loading ? (
+        <Paper elevation={4} style={{ padding: '1%' }}>
+          <Grid style={{ textAlign: 'center' }}>
+            <div style={{ margin: '1rem' }}>
+              <b>User: {user.name}</b>
+            </div>
+          </Grid>
+          <Grid style={{}}>
+            <Grid style={{ marginRight: '2%', marginLeft: '2%', border: '2px solid rgb(255, 137, 130)' }}>
+              <Grid>
+                <SalesTable salesTransactions={transactions} userPage />
+              </Grid>
+            </Grid>
+          </Grid>
         </Paper>
       ) : (
         <Loader />

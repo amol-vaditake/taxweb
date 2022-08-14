@@ -69,6 +69,10 @@ export default function AddAndEdit({ onClose }) {
                       const touchedAcNo = getIn(touched, date)
                       const errorAcNo = getIn(errors, date)
 
+                      const reference = `transactions[${index}].reference`
+                      const touchedReference = getIn(touched, reference)
+                      const errorReference = getIn(errors, reference)
+
                       const userId = `transactions[${index}].userId`
                       const touchedUserId = getIn(touched, userId)
                       const errorUserId = getIn(errors, userId)
@@ -182,7 +186,23 @@ export default function AddAndEdit({ onClose }) {
                               ))}
                             </TextField>
                           </Grid>
-
+                          <Grid item lg={2} sm={12} md={12}>
+                            <TextField
+                              fullWidth
+                              margin='normal'
+                              variant='outlined'
+                              label='Reference'
+                              type='text'
+                              name={reference}
+                              value={p.reference || ''}
+                              required
+                              helperText={touchedReference && errorReference ? errorReference : ''}
+                              error={Boolean(touchedReference && errorReference)}
+                              onBlur={handleBlur}
+                              onChange={handleChange}
+                              size='small'
+                            />
+                          </Grid>
                           <Grid item lg={2} sm={12} md={12}>
                             <TextField
                               fullWidth

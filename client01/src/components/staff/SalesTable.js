@@ -3,7 +3,7 @@ import React from 'react'
 import { Grid, Paper } from '@mui/material'
 import Loader from '../Loader'
 
-export default function Table({ salesTransactions = [] }) {
+export default function Table({ salesTransactions = [], userPage }) {
   return (
     <Paper elevation={4}>
       {salesTransactions?.length ? (
@@ -24,9 +24,15 @@ export default function Table({ salesTransactions = [] }) {
             <Grid item xs={1.5} style={{ borderRight: '2px solid rgb(255, 137, 130)', lineHeight: '5.8rem' }}>
               Date
             </Grid>
-            <Grid item xs={2.5} style={{ borderRight: '2px solid rgb(255, 137, 130)', lineHeight: '5.8rem' }}>
-              Name
-            </Grid>
+            {!userPage ? (
+              <Grid item xs={2.5} style={{ borderRight: '2px solid rgb(255, 137, 130)', lineHeight: '5.8rem' }}>
+                Name
+              </Grid>
+            ) : (
+              <Grid item xs={2.5} style={{ borderRight: '2px solid rgb(255, 137, 130)', lineHeight: '5.8rem' }}>
+                Reference
+              </Grid>
+            )}
             <Grid item xs={4} style={{ borderRight: '2px solid rgb(255, 137, 130)', lineHeight: '5.8rem' }}>
               Description
             </Grid>
@@ -56,7 +62,8 @@ export default function Table({ salesTransactions = [] }) {
                     }}
                     title={new Date(t.Date).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
                   >
-                    {new Date(t.date).toDateString()}
+                    {console.log(t)}
+                    {t.date ? new Date(t.date).toDateString() : new Date(t.Date).toDateString()}
                   </Grid>
                   <Grid
                     item
@@ -67,7 +74,7 @@ export default function Table({ salesTransactions = [] }) {
                       lineHeight: '4rem'
                     }}
                   >
-                    {t.name}
+                    {!userPage ? t.name : t.reference || 'NA'}
                   </Grid>
                   <Grid
                     item
@@ -78,7 +85,13 @@ export default function Table({ salesTransactions = [] }) {
                       lineHeight: '4rem'
                     }}
                   >
-                    {t.quantity} {t.sign} {t.price}
+                    {!t.description ? (
+                      <>
+                        {t.quantity} {t.sign} {t.price}
+                      </>
+                    ) : (
+                      <>{t.description}</>
+                    )}
                   </Grid>
                   <Grid item xs={4} container>
                     <Grid
