@@ -103,7 +103,11 @@ export default function Table({ salesTransactions = [], userPage }) {
                         lineHeight: '4rem'
                       }}
                     >
-                      {t.type === 'credit' ? t.finalValue : '---'}
+                      {!t.description ? (
+                        <>{t.type === 'credit' ? t.finalValue : '---'}</>
+                      ) : (
+                        <>{t.finalType === 'credit' ? t.finalAmount : '---'}</>
+                      )}
                     </Grid>
                     <Grid
                       item
@@ -113,7 +117,11 @@ export default function Table({ salesTransactions = [], userPage }) {
                         lineHeight: '4rem'
                       }}
                     >
-                      {t.type === 'debit' ? t.finalValue : '---'}
+                      {!t.description ? (
+                        <>{t.type === 'debit' ? t.finalValue : '---'}</>
+                      ) : (
+                        <>{t.finalType === 'debit' ? t.finalAmount : '---'}</>
+                      )}
                     </Grid>
                   </Grid>
                 </>
