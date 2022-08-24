@@ -15,7 +15,7 @@ export default function AddAndEdit({ onClose }) {
 
   async function addSaleTransaction(data) {
     data.transactions = data.transactions.map((t) => {
-      return { ...t, name: users.find((u) => u._id === t.userId).name }
+      return { ...t, name: users.find((u) => u._id === t.userId).name, reference: users.find((u) => u._id === t.referenceId).name }
     })
     setLoading(true)
     try {
@@ -69,9 +69,9 @@ export default function AddAndEdit({ onClose }) {
                       const touchedAcNo = getIn(touched, date)
                       const errorAcNo = getIn(errors, date)
 
-                      const reference = `transactions[${index}].reference`
-                      const touchedReference = getIn(touched, reference)
-                      const errorReference = getIn(errors, reference)
+                      const referenceId = `transactions[${index}].referenceId`
+                      const touchedReferenceId = getIn(touched, referenceId)
+                      const errorReferenceId = getIn(errors, referenceId)
 
                       const userId = `transactions[${index}].userId`
                       const touchedUserId = getIn(touched, userId)
@@ -188,20 +188,27 @@ export default function AddAndEdit({ onClose }) {
                           </Grid>
                           <Grid item lg={2} sm={12} md={12}>
                             <TextField
+                              id='outlined-select-currency'
+                              select
                               fullWidth
                               margin='normal'
                               variant='outlined'
                               label='Reference'
-                              type='text'
-                              name={reference}
-                              value={p.reference || ''}
+                              name={referenceId}
+                              value={p.referenceId}
                               required
-                              helperText={touchedReference && errorReference ? errorReference : ''}
-                              error={Boolean(touchedReference && errorReference)}
-                              onBlur={handleBlur}
+                              helperText={touchedReferenceId && errorReferenceId ? errorReferenceId : ''}
+                              error={Boolean(touchedReferenceId && errorReferenceId)}
                               onChange={handleChange}
+                              onBlur={handleBlur}
                               size='small'
-                            />
+                            >
+                              {(users || []).map((option) => (
+                                <MenuItem key={option._id} value={option._id}>
+                                  {option.name}
+                                </MenuItem>
+                              ))}
+                            </TextField>
                           </Grid>
                           <Grid item lg={2} sm={12} md={12}>
                             <TextField

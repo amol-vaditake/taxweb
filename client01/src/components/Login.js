@@ -24,7 +24,6 @@ export default function WithMaterialUI() {
         localStorage.setItem('jwtToken', token)
         setAuthToken(token)
         const decoded = jwt_decode(token)
-        console.log(decoded)
         dispatch(setUser(decoded))
       })
       // eslint-disable-next-line no-unused-vars

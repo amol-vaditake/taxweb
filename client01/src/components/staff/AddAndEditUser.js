@@ -13,8 +13,7 @@ export default function AddAndEdit({ onClose }) {
 
   async function addUser(data) {
     setLoading(true)
-    let res = await Axios.post(`${apiURL}/api/taxUsers/add`, data)
-    console.log(res)
+    await Axios.post(`${apiURL}/api/taxUsers/add`, data)
     setLoading(false)
     onClose && onClose()
   }
