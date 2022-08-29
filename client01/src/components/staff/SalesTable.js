@@ -6,7 +6,7 @@ import Loader from '../Loader'
 export default function Table({ salesTransactions = [], userPage }) {
   let credit = 0
   let debit = 0
-  salesTransactions.forEach((curr) => {
+  salesTransactions?.forEach((curr) => {
     if (curr.finalValue && curr.type === 'debit') debit = debit + curr.finalValue
     if (curr.finalValue && curr.type === 'credit') credit = credit + curr.finalValue
     if (curr.finalAmount && curr.finalType === 'debit') debit = debit + curr.finalAmount
